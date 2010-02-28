@@ -13,7 +13,8 @@ class liquidsoap {
     source => "$source_base/files/liquidsoap/tune.liq"
   }
   file { "/etc/liquidsoap/test.liq":
-    ensure => "/var/lib/liquidsoap/test.liq"
+    ensure => "/var/lib/liquidsoap/test.liq",
+		require => Package[liquidsoap]
   }
   exec { "add-liquidsoap-user-to-audio-group":
     command => "adduser liquidsoap audio",
