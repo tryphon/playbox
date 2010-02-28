@@ -14,7 +14,7 @@ class liquidsoap {
   }
   file { "/etc/liquidsoap/test.liq":
     ensure => "/var/lib/liquidsoap/test.liq",
-		require => Package[liquidsoap]
+    require => Package[liquidsoap]
   }
   exec { "add-liquidsoap-user-to-audio-group":
     command => "adduser liquidsoap audio",
