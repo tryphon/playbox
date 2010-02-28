@@ -9,7 +9,6 @@ SystemBuilder::Task.new(:playbox) do
   SystemBuilder::DiskImage.new("dist/disk").tap do |image|
     image.boot = SystemBuilder::DebianBoot.new("build/root")
     image.boot.configurators << SystemBuilder::PuppetConfigurator.new
-		image.boot.include << "debian-archive-keyring"
   end
 end
 
