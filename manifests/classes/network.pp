@@ -11,18 +11,23 @@ class network::dhcp::readonly {
   include readonly::common
 
   file { "/etc/dhcp3/dhclient.conf":
-    source => "$source_base/files/dhcp3/dhclient.conf"
+    source => "$source_base/files/dhcp3/dhclient.conf", 
+    require => Package["dhcp3-client"] 
   } 
   file { "/etc/dhcp3/dhclient-script":
-    source => "$source_base/files/dhcp3/dhclient-script"
+    source => "$source_base/files/dhcp3/dhclient-script", 
+    require => Package["dhcp3-client"] 
   } 
 
-  file { "/var/etc/resolv.conf":
-    ensure => present
+  exec { "copy-resolv.conf":
+    command => "cat /etc/resolv.conf > /var/etc/resolv.conf",
+    creates => "/var/etc/resolv.conf",
+    require => File["/var/etc"]
   }
 
   file { "/etc/resolv.conf":
-    ensure => "/var/etc/resolv.conf"
+    ensure => "/var/etc/resolv.conf",
+    require => Exec["copy-resolv.conf"]
   }
 
   readonly::mount_tmpfs { "/var/lib/dhcp3": }
