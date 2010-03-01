@@ -13,6 +13,9 @@ iface eth0 inet dhcp
 "
 }
 
+# TODO replace by puppet boot
+include readonly::initvarlog
+
 include network::base
 include network::dhcp::readonly
 include network::ifplugd
