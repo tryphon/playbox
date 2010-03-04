@@ -1,6 +1,7 @@
 import "defaults"
-import "defines/*"
 import "classes/*"
+
+import "box"
 
 $source_base="/tmp/puppet"
 
