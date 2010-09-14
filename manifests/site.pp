@@ -1,17 +1,15 @@
 import "defaults"
 import "classes/*"
+import "config"
 
 import "box"
 
 $source_base="/tmp/puppet"
 
 $box_name="playbox"
+include box
 
-# TODO replace by puppet boot
-include readonly::initvarlog
+$amixerconf_mode="playback"
+include box::audio
 
-include network
-include network::interfaces::deprecated
-
-include alsa::common
 include liquidsoap::readonly
