@@ -1,0 +1,27 @@
+<VirtualHost *:80>
+	ServerAdmin webmaster@localhost
+
+  DNSSDServiceName "Tryphon PlayBox"
+
+	Alias /munin /var/www/munin
+	<Directory /var/www/munin>
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride None
+		Order allow,deny
+		Allow from all
+	</Directory>
+
+	ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+	<Directory "/usr/lib/cgi-bin">
+		AllowOverride None
+		Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+		Order allow,deny
+		Allow from all
+	</Directory>
+
+  LogLevel warn
+
+  # Use only syslog
+  ErrorLog syslog
+  CustomLog "|/usr/bin/logger -p local1.info -t apache2/access" combined
+</VirtualHost>
