@@ -9,6 +9,7 @@ File {
 }
 
 import "config.pp"
+import "classes/*.pp"
 
 # Use tag boot for resources required at boot (network files, etc ..)
 

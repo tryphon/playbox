@@ -10,6 +10,10 @@ $box_name="playbox"
 include box
 
 $amixerconf_mode="playback"
-include box::audio
+include box
+
+include apache
+include apache::dnssd
 
 include liquidsoap::readonly
+
