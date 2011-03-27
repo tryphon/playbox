@@ -7,10 +7,11 @@ import "box"
 $source_base="/tmp/puppet"
 
 $box_name="playbox"
-include box
-
+$box_config_host="playcentral.tryphon.eu"
 $amixerconf_mode="playback"
+
 include box
+include puppet::download-config
 
 include apache
 include apache::dnssd
