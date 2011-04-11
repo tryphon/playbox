@@ -1,0 +1,98 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'optparse'
+require 'daemons'
+require 'logger'
+
+class File
+
+  def self.suffix_basename(file, suffix)
+    dirname = File.dirname(file)
+
+    dirname =
+      case dirname
+      when "/": "/"
+      when ".": ""
+      else
+        dirname + "/"
+      end
+
+    extension = File.extname(file)
+    dirname +
+      File.basename(file, extension) +
+      suffix +
+      extension
+  end
+
+  def self.write(file, content)
+    File.open(file, "w") { |f| f.puts content }
+  end
+
+end
+module VolumePad
+  class CLI
+    def self.execute(stdout, *arguments)
+      options = {:control => "Master"}
+      mandatory_options = %w()
+
+      OptionParser.new do |opts|
+        opts.banner = <<-BANNER.gsub(/^          /,'')
+          VolumePad : Controle audio volume with the USB pad
+
+          Usage: #{File.basename($0)} [options] /dev/input/eventxx
+
+          Options are:
+        BANNER
+        opts.separator ""
+        opts.on("-p", "--pid=PID_FILE", String,
+                "File to write the process pid") { |arg| options[:pid] = arg }
+        opts.on("-b", "--background", nil,
+                "Daemonize the process") { |arg| options[:daemonize] = true }
+        opts.on("-c", "--control=CONFIG", String,
+                "Control to act on") { |arg| options[:control] = arg }
+        opts.on("--32", "Run on a 32 bit system") { |arg| options[:shorttimestamp] = true }
+        opts.on("-h", "--help",
+                "Show this help message.") { stdout.puts opts; exit }
+        opts.parse!(arguments)
+
+        if mandatory_options && mandatory_options.find { |option| options[option.to_sym].nil? }
+          stdout.puts opts; exit
+        end
+      end
+
+      @logger = Logger.new('/var/log/volumepadd.log')
+      @logger.level = Logger::INFO
+
+      pid_file = File.expand_path(options[:pid]) if options[:pid]
+
+      Daemonize.daemonize(nil, "volumepadd") if options[:daemonize]
+      File.write(pid_file, $$) if pid_file
+
+      matcher={:str => "qqSSl", :size => 24}
+      matcher={:str => "llSSl", :size => 16} if options[:shorttimestamp]
+      
+      File.open(arguments[0]) do |f|
+        while true
+          event = f.read(matcher[:size]).unpack(matcher[:str])
+          time = 1.0 * (event[0] + (event[1]/1000000.0))
+          type = event[2]
+          code = event[3]
+          value = event[4]
+
+          if type == 1 and (value == 1 or value == 2)
+            system "amixer sset #{options[:control]} 2%+ >> /dev/null" if code == 115
+            system "amixer sset #{options[:control]} 2%- >> /dev/null" if code == 114
+          end
+        end
+      end
+
+    rescue Exception => e
+     @logger.warn "oops #{e}"
+     #puts "oops #{e}"
+
+    end
+  end
+end
+
+
+VolumePad::CLI.execute(STDOUT, *ARGV)

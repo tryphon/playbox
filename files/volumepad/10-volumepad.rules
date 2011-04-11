@@ -1,0 +1,1 @@
+KERNEL=="event*", SUBSYSTEM=="input", ATTRS{name}=="Dean Camera LUFA Keyboard Demo", RUN+="/usr/local/bin/volumepad-control %k"

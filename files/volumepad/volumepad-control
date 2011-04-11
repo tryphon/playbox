@@ -1,0 +1,24 @@
+#!/bin/bash
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/local/bin/volumepadd
+DAEMON_OPTS=
+NAME=volumepadd
+DESC="VolumePad Daemon"
+
+[ -r /etc/default/$NAME ] && . /etc/default/$NAME
+
+. /lib/lsb/init-functions
+
+EVDEV=$1
+
+case "$ACTION" in
+add)
+	logger "volumepad inserted ($EVDEV)"
+	start-stop-daemon --start --pidfile /var/run/$NAME.pid --startas $DAEMON -- $DAEMON_OPTS --background --pid=/var/run/$NAME.pid /dev/input/$EVDEV
+	;;
+remove)
+	logger "volumepad removed"
+	start-stop-daemon --stop --pidfile /var/run/$NAME.pid
+	;;
+esac
