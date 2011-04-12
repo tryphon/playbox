@@ -7,7 +7,7 @@ class volumepad {
     mode => 755,
     source => "$source_base/files/volumepad/volumepad-control",
   }
-  file { "/etc/local/bin/volumepadd":
+  file { "/usr/local/bin/volumepadd":
     mode => 755,
     source => "$source_base/files/volumepad/volumepadd",
   }
@@ -16,9 +16,17 @@ class volumepad {
     source => "$source_base/files/volumepad/10-volumepad.rules",
     require => Package[udev]
   }
+  file { "/etc/rc.local":
+    mode => 755,
+    source => "$source_base/files/etc/rc.local",
+  }
+  package { alsa-utils: }
+  package { udev: }
+  package { libdaemons-ruby: }
+  package { rubygems: }
 }
 
-class liquidsoap::readonly {
+class volumepad::readonly {
   include readonly::common
   include volumepad
 }

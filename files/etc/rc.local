@@ -1,0 +1,4 @@
+#!/bin/sh -e
+#trigger udev on volumepad in case it was plugged at boot time and havn't been correctly detected
+udevadm trigger --subsystem-match=input
+exit 0

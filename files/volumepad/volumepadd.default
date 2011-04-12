@@ -1,5 +1,2 @@
 STYPE=`uname -m`
-if [ $STYPE != 'x86_64' ]; then
-	DAEMON_OPTS+=" --32"
-fi
-DAEMON_OPTS+=" --control=Headphone"
+DAEMON_OPTS+=" --32 --control=Headphone"
