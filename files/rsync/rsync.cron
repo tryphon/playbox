@@ -1,0 +1,12 @@
+# /etc/cron.d/anacron: crontab entries for the anacron package
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+<% if has_variable? "rsync_cron_pattern" %>
+<%= rsync_cron_pattern %>   root	/usr/local/sbin/rsync-box
+<% else %>
+# rsync_cron_pattern is not defined, cron is disabled
+<% end%>
+
+@reboot root	/usr/local/sbin/rsync-box

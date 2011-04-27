@@ -18,3 +18,5 @@ include apache::dnssd
 
 include liquidsoap::readonly
 include volumepad::readonly
+
+include rsync::cron

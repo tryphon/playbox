@@ -1,0 +1,25 @@
+#!/bin/sh
+
+options_file="/etc/default/rsync"
+
+if [ ! -r $options_file ]; then
+    logger -t rsync -i "$options_file not found"
+    exit 1
+fi
+
+. $options_file
+
+export RSYNC_PASSWORD="$rsync_password"
+
+if [ -z $rsync_url ]; then
+    logger -t rsync -i "not specified rsync_url"
+    exit 1
+fi
+
+mount_point=`df -h $rsync_target | awk '! /Filesystem/ { print $6 }'`
+
+mount -o remount,rw $mount_point
+trap "mount -o remount,ro $mount_point" ERR EXIT
+
+rsync -av $rsync_url $rsync_target 2>&1 | logger -t rsync -i 
+exit $?
