@@ -16,6 +16,7 @@ class rsync::cron {
     ensure => "/var/etc/rsync/rsync.default"
   }
   file { "/etc/cron.d/rsync":
-    ensure => "/var/etc/rsync/rsync.cron"
+    ensure => "/var/etc/rsync/rsync.cron",
+    require => Package[cron]
   }
 }
