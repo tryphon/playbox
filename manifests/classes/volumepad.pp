@@ -23,7 +23,7 @@ class volumepad {
   package { alsa-utils: }
   package { udev: }
   package { libdaemons-ruby: }
-  package { rubygems: }
+  include ruby::gems
 }
 
 class volumepad::readonly {
