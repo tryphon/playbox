@@ -20,3 +20,6 @@ include liquidsoap::readonly
 include volumepad::readonly
 
 include rsync::cron
+
+$release_cron_before_download="mount -o remount,size=70%"
+include release::cron
