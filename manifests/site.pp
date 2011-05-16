@@ -21,5 +21,5 @@ include volumepad::readonly
 
 include rsync::cron
 
-$release_cron_before_download="mount -o remount,size=70%"
+$release_cron_before_download="mount -o remount,size=80%"
 include release::cron
