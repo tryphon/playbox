@@ -1,3 +1,3 @@
 #!/usr/bin/liquidsoap
 
-output.alsa(single("/var/lib/liquidsoap/tune.ogg"))
+output.alsa(single("tune.ogg"))
