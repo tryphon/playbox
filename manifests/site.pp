@@ -23,5 +23,5 @@ include rsync::cron
 
 $release_cron_download_directory="/boot"
 $release_cron_before_download="mount -o remount,rw /boot"
-$release_cron_after_download="mount -o remount,ro /boot"
+$release_cron_after_download="mount -o remount,ro /boot || /bin/true"
 include release::cron
