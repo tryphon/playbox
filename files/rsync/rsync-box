@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 options_file="/etc/default/rsync"
 
@@ -21,5 +21,19 @@ mount_point=`df -h $rsync_target | awk '! /Filesystem/ { print $6 }'`
 mount -o remount,rw $mount_point
 trap "mount -o remount,ro $mount_point" ERR EXIT
 
+function scripts_checksum() {
+  cat $rsync_target/*.liq | md5sum | cut -f1 -d' '
+}
+
+before_scripts_checksum=`scripts_checksum`
+
 rsync -av $rsync_url $rsync_target 2>&1 | logger -t rsync -i 
+
+after_scripts_checksum=`scripts_checksum`
+
+if [ $before_scripts_checksum != $after_scripts_checksum ]; then
+    logger -t rsync -i "scripts have been updated, restart daemon"
+    /usr/sbin/invoke-rc.d liquidsoap restart
+fi
+
 exit $?
