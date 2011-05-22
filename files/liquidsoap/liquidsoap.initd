@@ -45,7 +45,7 @@ case "$1" in
       if test $liq != '*.liq' ; then
         echo -n " $liq "
         start-stop-daemon --start --quiet --pidfile $rundir/${liq%.liq}.pid \
-          --chuid $user:$group --chdir $confdir --background --exec $liquidsoap -- $confdir/$liq
+          --chuid $user:$group --chdir $confdir --make-pidfile --background --exec $liquidsoap -- $confdir/$liq
       fi
     done
     echo "."
