@@ -2,11 +2,11 @@ GEM
   remote: http://rubygems.org/
   specs:
     rake (0.8.7)
-    system-builder (0.0.20)
+    system-builder (0.0.21)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   rake
-  system-builder (>= 0.0.20)
+  system-builder (>= 0.0.21)
