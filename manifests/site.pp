@@ -16,7 +16,7 @@ include puppet::download-config
 include apache
 include apache::dnssd
 
-include liquidsoap::readonly
+include liquidsoap::local
 include volumepad::readonly
 
 include rsync::cron
