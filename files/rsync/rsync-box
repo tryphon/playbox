@@ -27,7 +27,7 @@ function scripts_checksum() {
 
 before_scripts_checksum=`scripts_checksum`
 
-rsync -av $rsync_url $rsync_target 2>&1 | logger -t rsync -i 
+rsync -av --delete-after $rsync_url $rsync_target 2>&1 | logger -t rsync -i 
 
 after_scripts_checksum=`scripts_checksum`
 
