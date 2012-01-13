@@ -16,10 +16,19 @@ if [ -z $rsync_url ]; then
     exit 1
 fi
 
+lock_file="/var/run/rsync-box.lock"
+if [ -f "$lock_file" ]; then
+    logger -t rsync -i "lock file found ($lock_file)"
+    exit 1
+fi
+
+touch $lock_file
+trap "rm -f $lock_file" ERR EXIT
+
 mount_point=`df -h $rsync_target | awk '! /Filesystem/ { print $6 }'`
 
 mount -o remount,rw $mount_point
-trap "mount -o remount,ro $mount_point" ERR EXIT
+trap "rm -f $lock_file ; mount -o remount,ro $mount_point" ERR EXIT
 
 function scripts_checksum() {
   cat $rsync_target/*.liq | md5sum | cut -f1 -d' '
@@ -28,6 +37,7 @@ function scripts_checksum() {
 before_scripts_checksum=`scripts_checksum`
 
 rsync -av --delete-after $rsync_url $rsync_target 2>&1 | logger -t rsync -i 
+rsync_error_level=${PIPESTATUS[0]}
 
 after_scripts_checksum=`scripts_checksum`
 
@@ -36,4 +46,4 @@ if [ $before_scripts_checksum != $after_scripts_checksum ]; then
     /usr/sbin/invoke-rc.d liquidsoap restart
 fi
 
-exit $?
+exit $rsync_error_level
