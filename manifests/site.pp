@@ -6,7 +6,6 @@ import "box"
 
 $source_base="/tmp/puppet"
 
-$box_name="playbox"
 $box_config_host="playcentral.tryphon.eu"
 $amixerconf_mode="playback"
 
