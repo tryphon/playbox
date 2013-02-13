@@ -4,6 +4,10 @@ require 'system_builder'
 require 'system_builder/box_tasks'
 
 SystemBuilder::BoxTasks.new(:playbox) do |box|
+  box.boot do |boot|
+    boot.version = :squeeze
+  end
+
   box.disk_image do |image|
     image.size = 1024.megabytes
   end
