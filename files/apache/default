@@ -3,6 +3,13 @@
 
   DNSSDServiceName "Tryphon PlayBox"
 
+  DocumentRoot /var/www/
+	<Directory /var/www/>
+		AllowOverride None
+		Order allow,deny
+		Allow from all
+	</Directory>
+
 	Alias /munin /var/www/munin
 	<Directory /var/www/munin>
 		Options Indexes FollowSymLinks MultiViews
