@@ -20,7 +20,6 @@ class volumepad {
     mode => 755,
     source => "$source_base/files/etc/rc.local",
   }
-  package { alsa-utils: }
   package { udev: }
   package { libdaemons-ruby: }
   include ruby::gems
