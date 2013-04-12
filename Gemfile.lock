@@ -1,11 +1,11 @@
 GIT
   remote: git://projects.tryphon.priv/system-builder
-  revision: 6bf5a38e92b390ba0bfdd9e11c57058910aa5523
+  revision: 55ab38288470b76262644d1e2cde71f7a2b6a03f
   specs:
     system-builder (0.0.26)
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     rake (0.8.7)
 
