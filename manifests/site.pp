@@ -22,6 +22,8 @@ Box::Release.after_download_command = 'mount -o remount,ro /boot || /bin/true'
 include apache
 include apache::dnssd
 
+include network::wifi
+
 include liquidsoap::local
 include volumepad::readonly
 
