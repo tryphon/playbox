@@ -6,3 +6,4 @@ puppet.log
 tmp/*
 .bundle/*
 .rbenv-version
+log/*
