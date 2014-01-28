@@ -3,3 +3,6 @@ build
 *~
 local.rb
 puppet.log
+tmp/*
+.bundle/*
+.rbenv-version
