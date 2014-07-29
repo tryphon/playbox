@@ -1,37 +1,78 @@
 GIT
+  remote: git://projects.tryphon.priv/box
+  revision: b0b563c17147ae3332d1feba7fac9d4c46e186f9
+  specs:
+    tryphon-box (0.19)
+      activesupport (~> 3.2.17)
+      facter (~> 1.7.5)
+      httparty
+      steto
+      treetop
+      trollop
+
+GIT
+  remote: git://projects.tryphon.priv/ruby-qemu
+  revision: f22b64b1fcccc7ccb9de1905402ffa209548301b
+  specs:
+    qemu (0.4)
+      daemons
+
+GIT
   remote: git://projects.tryphon.priv/system-builder
-  revision: 5cccc3a5e1cc9efe6b30e7869c99043e0a1c16b5
+  revision: 42ec48d535ac8488707cd27dfb824eb572fb910b
   specs:
     system-builder (0.0.26)
+      qemu
       tryphon-vmbox
 
 GIT
   remote: git://projects.tryphon.priv/vmbox
-  revision: 3a5d75072aa7916b9b2262163f0f9a2ea14553f9
+  revision: 671494c1503dc4f95632a7847eb79831e9ce7ae8
   specs:
     tryphon-vmbox (0.0.1)
       activesupport (~> 3.2.1)
       json
-      qemu
+      net-scp
+      net-ssh
+      qemu (~> 0.4)
+      tryphon-box
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (3.2.13)
-      i18n (= 0.6.1)
+    activesupport (3.2.19)
+      i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
+    cocaine (0.2.1)
     daemons (1.1.9)
-    i18n (0.6.1)
-    json (1.8.0)
-    multi_json (1.7.7)
-    qemu (0.0.1)
-      daemons
+    facter (1.7.6)
+    httparty (0.13.1)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
+    i18n (0.6.11)
+    json (1.8.1)
+    multi_json (1.10.1)
+    multi_xml (0.5.5)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.9.1)
+    parallel (1.1.2)
+    polyglot (0.3.5)
     rake (0.8.7)
+    steto (0.0.7)
+      cocaine (= 0.2.1)
+      json
+      parallel
+    treetop (1.5.3)
+      polyglot (~> 0.3)
+    trollop (2.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  qemu!
   rake
   system-builder!
+  tryphon-box!
   tryphon-vmbox!
