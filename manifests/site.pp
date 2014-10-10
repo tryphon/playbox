@@ -28,5 +28,4 @@ include liquidsoap::local
 include volumepad::readonly
 
 include rsync::cron
-
-include 4channels_fallback
+include go-broadcast
