@@ -1,30 +1,18 @@
-<VirtualHost *:80>
-	ServerAdmin webmaster@localhost
+<VirtualHost *:80>      
+  ServerName playbox.local
+  ServerAdmin support@tryphon.eu
 
   DNSSDServiceName "Tryphon PlayBox"
 
-  DocumentRoot /var/www/
-	<Directory /var/www/>
-		AllowOverride None
-		Order allow,deny
-		Allow from all
-	</Directory>
-
-	Alias /munin /var/www/munin
-	<Directory /var/www/munin>
-		Options Indexes FollowSymLinks MultiViews
-		AllowOverride None
-		Order allow,deny
-		Allow from all
-	</Directory>
-
-	ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
-	<Directory "/usr/lib/cgi-bin">
-		AllowOverride None
-		Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-		Order allow,deny
-		Allow from all
-	</Directory>
+  DocumentRoot /usr/share/playcontrol/public
+  PassengerDefaultUser www-data
+  PassengerMaxPoolSize 1
+  PassengerMaxRequests 10000
+  <Directory /usr/share/playcontrol/public>
+     AllowOverride None
+     Order allow,deny
+     Allow from all
+  </Directory>
 
   LogLevel warn
 

@@ -29,3 +29,4 @@ include volumepad::readonly
 
 include rsync::cron
 include go-broadcast
+include playcontrol
