@@ -15,7 +15,7 @@ class playcontrol {
     require => Package[playcontrol]
   }
   package { playcontrol:
-    ensure => "1.0-1+build3",
+    ensure => "1.0-1+build4",
     require => [Apt::Source['tryphon-dev'], Package['libapache2-mod-passenger']]
   }
 
